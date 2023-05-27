@@ -219,13 +219,11 @@ abstract public class Piece extends ImageView {
             case BIRD -> new Bird(p, x, y);
             case PHOENIX -> new Phoenix(p, x, y);
             case DRAGON -> new Dragon(p, x, y);
+            case GRYFFON -> new Gryffon(p, x, y);
             // custom pawns
             case WALL -> new Wall(p, x, y);
 
-            /*case BISHOP -> new Bishop(p, x, y);
-            case KNIGHT -> new Knight(p, x, y);
-            case QUEEN -> new Queen(p, x, y);
-            case ROOK -> new Rook(p, x, y);
+            /*
                     MINION(-1), // larbin
                     SOLDAT(-1), // soldat
                     WALL(-1), // muraille
@@ -253,6 +251,7 @@ abstract public class Piece extends ImageView {
         };
     }
 
+    /*
     public static Piece fusionPiece(Type t1, Type t2, int x, int y, Player p){
         return switch (t1){
             case ROOK -> switch(t2){
@@ -319,7 +318,7 @@ abstract public class Piece extends ImageView {
             };
             default -> throw new IllegalArgumentException();
         };
-    }
+    }*/
     public int price(){
         return type.price;
     }

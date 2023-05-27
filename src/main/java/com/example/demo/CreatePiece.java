@@ -54,8 +54,8 @@ public class CreatePiece {
     public static ArrayList<Piece> blackAndWhitePieces = new ArrayList<>();
     private static final ArrayList<Piece.Type> basicPieces = new ArrayList<>(List.of(ROOK, KNIGHT, BISHOP, QUEEN));
     private static final ArrayList<Piece.Type> customPieces =
-            new ArrayList<>(List.of(ARACHNE, WALLABY, BIRD, PHOENIX, DRAGON
-                    /*, GRYFFON, TWHOMP, CHAOS, EXCALIBUR, SAURON, BOAT*/));
+            new ArrayList<>(List.of(ARACHNE, WALLABY, BIRD, PHOENIX, DRAGON, GRYFFON
+                    /*, TWHOMP, CHAOS, EXCALIBUR, SAURON, BOAT*/));
 
     public CreatePiece(Stage stage, ArrayList<Piece.Type> pieces, int coins) {
         chosePieces(stage,pieces,coins);

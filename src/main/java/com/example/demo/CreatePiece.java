@@ -42,7 +42,6 @@ public class CreatePiece {
     public static boolean fusionning = false;
     public static boolean fusion = true;
     public static Piece.Type fusionPiece = null;
-    // private static String fusionPiece;
     public static ArrayList<Piece> whitePieces = new ArrayList<>();
     public static ArrayList<String> whiteCases = new ArrayList<>(List.of("a", "b", "c", "d", "f", "g", "h"));
     public static ArrayList<Piece> blackPieces = new ArrayList<>();
@@ -141,8 +140,6 @@ public class CreatePiece {
             }
         });
         passButton.setAlignment(Pos.CENTER_RIGHT);
-        //passButton.setPadding(new Insets(0, 50, 0, 0)); // add right padding
-        //buttonsHB.getChildren().add(passButton);
 
         // add gold coin image
         Image coinImage = new Image(CreatePiece.class.getResourceAsStream("goldcoin.png")); // replace "coin.png" with your image file name
@@ -159,12 +156,6 @@ public class CreatePiece {
         buttonsHB.setAlignment(Pos.CENTER);
         imagesHB.setAlignment(Pos.CENTER);
 
-
-/*
-        // create VBox to hold image views and buttons
-        VBox root = new VBox(20, imagesHB, buttonsHB);
-        root.setPadding(new Insets(20));
-        root.setAlignment(Pos.CENTER);*/
         // create VBox to hold image views and buttons
         VBox root = new VBox(20);
         root.getChildren().addAll(coinHB, imagesHB, buttonsHB, passButton);

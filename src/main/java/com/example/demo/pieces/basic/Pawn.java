@@ -58,45 +58,47 @@ public class Pawn extends Piece {
             }
         }
 
-        // Black (check for "prise en passant")
-        if (player == Player.BLACK){
-            if (x > 0){
-                Move move = new Move(x-1, y);
-                if (getSquareByMove(move).isOccupied() &&
-                        getPieceByMove(move).getPlayer() != player &&
-                        getPieceByMove(move).getType() == PAWN &&
-                        ((Pawn) getPieceByMove(move)).justAdvancedTwoSquares &&
-                        !getSquareByMove(new Move(x-1, y+1)).isOccupied())
-                    possMoves.add(new Move(x-1, y+1));
+        // check for "prise en passant"
+        switch (player) {
+            case BLACK -> {
+                if (x > 0){
+                    Move move = new Move(x-1, y);
+                    if (getSquareByMove(move).isOccupied() &&
+                            getPieceByMove(move).getPlayer() != player &&
+                            getPieceByMove(move).getType() == PAWN &&
+                            ((Pawn) getPieceByMove(move)).justAdvancedTwoSquares &&
+                            !getSquareByMove(new Move(x-1, y+1)).isOccupied())
+                        possMoves.add(new Move(x-1, y+1));
+                }
+                if (x < 7){
+                    Move move = new Move(x+1, y);
+                    if (getSquareByMove(move).isOccupied() &&
+                            getPieceByMove(move).getPlayer() != player &&
+                            getPieceByMove(move).getType() == PAWN &&
+                            ((Pawn) getPieceByMove(move)).justAdvancedTwoSquares &&
+                            !getSquareByMove(new Move(x+1, y+1)).isOccupied())
+                        possMoves.add(new Move(x+1, y+1));
+                }
             }
-            if (x < 7){
-                Move move = new Move(x+1, y);
-                if (getSquareByMove(move).isOccupied() &&
-                        getPieceByMove(move).getPlayer() != player &&
-                        getPieceByMove(move).getType() == PAWN &&
-                        ((Pawn) getPieceByMove(move)).justAdvancedTwoSquares &&
-                        !getSquareByMove(new Move(x+1, y+1)).isOccupied())
-                    possMoves.add(new Move(x+1, y+1));
-            }
-        } else {
-        // White
-            if (x > 0){
-                Move move = new Move(x-1, y);
-                if (getSquareByMove(move).isOccupied() &&
-                        getPieceByMove(move).getPlayer() != player &&
-                        getPieceByMove(move).getType() == PAWN &&
-                        ((Pawn) getPieceByMove(move)).justAdvancedTwoSquares &&
-                        !getSquareByMove(new Move(x-1, y-1)).isOccupied())
-                    possMoves.add(new Move(x-1, y-1));
-            }
-            if (x < 7){
-                Move move = new Move(x+1, y);
-                if (getSquareByMove(move).isOccupied() &&
-                        getPieceByMove(move).getPlayer() != player &&
-                        getPieceByMove(move).getType() == PAWN &&
-                        ((Pawn) getPieceByMove(move)).justAdvancedTwoSquares &&
-                        !getSquareByMove(new Move(x+1, y-1)).isOccupied())
-                    possMoves.add(new Move(x+1, y-1));
+            case WHITE -> {
+                if (x > 0){
+                    Move move = new Move(x-1, y);
+                    if (getSquareByMove(move).isOccupied() &&
+                            getPieceByMove(move).getPlayer() != player &&
+                            getPieceByMove(move).getType() == PAWN &&
+                            ((Pawn) getPieceByMove(move)).justAdvancedTwoSquares &&
+                            !getSquareByMove(new Move(x-1, y-1)).isOccupied())
+                        possMoves.add(new Move(x-1, y-1));
+                }
+                if (x < 7){
+                    Move move = new Move(x+1, y);
+                    if (getSquareByMove(move).isOccupied() &&
+                            getPieceByMove(move).getPlayer() != player &&
+                            getPieceByMove(move).getType() == PAWN &&
+                            ((Pawn) getPieceByMove(move)).justAdvancedTwoSquares &&
+                            !getSquareByMove(new Move(x+1, y-1)).isOccupied())
+                        possMoves.add(new Move(x+1, y-1));
+                }
             }
         }
 

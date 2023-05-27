@@ -58,11 +58,7 @@ public class Game {
             if(target instanceof Square square){
                 if(square.isOccupied()){
                     Piece newPiece = (Piece) square.getChildren().get(0);
-                    /*if (isPlayingTwice && newPiece != playingTwice) {
-                        if (currentPiece != null) deselectPiece(false);
-                        currentPiece = null;
-                        return;
-                    }*/
+
                     if (isPlayingTwice){
                         if (currentPiece == null){
                             currentPiece = newPiece;
@@ -205,6 +201,14 @@ public class Game {
         currentPiece.setX(square.getX());
         currentPiece.setY(square.getY());
 
+        // Check for "prise en passant"
+        if (currentPiece.getType() == PAWN && square.getX() != initialSquare.getX()) {
+            int dx = square.getX() - initialSquare.getX();
+            Square killedPawn = cb.getSquare(initialSquare.getX() + dx, initialSquare.getY());
+            killedPawn.getChildren().remove(0);
+            killedPawn.setOccupancy(false);
+        }
+
         if (currentPiece.playsTwice()){
             if (currentPiece.justPlayed()){
                 isPlayingTwice = false;
@@ -245,7 +249,6 @@ public class Game {
                 dialog.close(); // Close the dialog after starting a new game
                 cleanUp();
                 new CreatePiece(primaryStage, new ArrayList<>(List.of(ROOK, KNIGHT, BISHOP, QUEEN)), Main.N_COINS);
-                //CreatePiece.chosePieces(primaryStage, new ArrayList<>(List.of(ROOK, KNIGHT, BISHOP, QUEEN)), Main.N_COINS);
             });
 
             VBox vbox = new VBox(text, newGameButton);
@@ -255,17 +258,6 @@ public class Game {
             Scene dialogScene = new Scene(vbox, 300, 200);
             dialog.setScene(dialogScene);
             dialog.show();
-
-
-
-
-            /*VBox centerBox = new VBox(text);
-            centerBox.setAlignment(Pos.CENTER);
-
-            BorderPane borderPane = new BorderPane(centerBox);
-            Scene dialogScene = new Scene(borderPane, 200, 100);
-            dialog.setScene(dialogScene);
-            dialog.show();*/
         }
 
 

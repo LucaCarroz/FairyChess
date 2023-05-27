@@ -46,7 +46,6 @@ public class Main extends Application {
                 // Start a new game here
                 try {
                     new CreatePiece(primaryStage, new ArrayList<>(List.of(ROOK, KNIGHT, BISHOP, QUEEN)), N_COINS);
-                    //com.example.demo.CreatePiece.chosePieces(primaryStage, new ArrayList<>(List.of(ROOK, KNIGHT, BISHOP, QUEEN)), N_COINS);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

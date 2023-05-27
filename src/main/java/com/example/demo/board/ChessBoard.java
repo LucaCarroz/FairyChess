@@ -24,6 +24,13 @@ public class ChessBoard {
         makeBoard(this.chessBoard, theme, pieces);
     }
 
+    public Square getSquare(int x, int y) {
+        for (Square square: squares){
+            if (square.getX() == x && square.getY() == y)
+                return square;
+        }
+        throw new IllegalArgumentException("Invalid x and y: x = " + x + ",y = " + y);
+    }
 
     private void makeBoard(GridPane chessBoard, String theme, List<Piece> pieces){
         for(int i=0; i<8; i++){

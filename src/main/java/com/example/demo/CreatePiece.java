@@ -34,6 +34,10 @@ public class CreatePiece {
     private static final int MINCOSTKNIGHTFUSION = Math.min(Math.min(NAZGUL.price, TROJANHORSE.price), Math.min(QUEENIGHT.price, BUCEPHALE.price));
     private static final int MINCOSTBISHOPFUSION = Math.min(NAZGUL.price, CARDINAL.price);
     private static final int MINCOSTQUEENFUSION = Math.min(QUEENIGHT.price, CHAOS.price);
+    private static final int MAXCOSTROOKFUSION = Math.max(TROJANHORSE.price, LIGHTHOUSE.price);
+    private static final int MAXCOSTKNIGHTFUSION = Math.max(Math.max(NAZGUL.price, TROJANHORSE.price), Math.max(QUEENIGHT.price, BUCEPHALE.price));
+    private static final int MAXCOSTBISHOPFUSION = Math.max(NAZGUL.price, CARDINAL.price);
+    private static final int MAXCOSTQUEENFUSION = Math.max(QUEENIGHT.price, CHAOS.price);
 
 
     public static int nFusion = 0;
@@ -73,7 +77,21 @@ public class CreatePiece {
             System.out.println(path);
             ImageView image  = new ImageView(new Image(getClass().getResourceAsStream(path)));
             // TODO: change the "pieces.get(i).price" when we are doing fusions to display the correct price
-            Label costLabel = new Label("$" + pieces.get(i).price); // Replace 'pieces.get(i).getCost()' with the code that gets the cost of the piece
+            String cost = "-1$";
+            if (fusion && !fusionning){
+                switch(pieces.get(i)) {
+                    case ROOK -> cost = "$" + MINCOSTROOKFUSION + "-" + MAXCOSTROOKFUSION;
+                    case KNIGHT -> cost = "$" + MINCOSTKNIGHTFUSION + "-" + MAXCOSTKNIGHTFUSION;
+                    case BISHOP -> cost = "$" + MINCOSTBISHOPFUSION + "-" + MAXCOSTBISHOPFUSION;
+                    case QUEEN -> cost = "$" + MINCOSTQUEENFUSION + "-" + MAXCOSTQUEENFUSION;
+                }
+            } else {
+                cost = "$" + pieces.get(i).price;
+            }
+
+
+
+            Label costLabel = new Label(cost); // Replace 'pieces.get(i).getCost()' with the code that gets the cost of the piece
             costLabel.setTextFill(Color.GOLD);
             costLabel.setFont(Font.font("Arial", FontWeight.BOLD, 22));
             VBox vBox = new VBox(image, costLabel);
@@ -181,11 +199,10 @@ public class CreatePiece {
             if (fusion) {
                 if (fusionning) {
                     nFusion++;
-                    if (Piece.fusionPieceCost(fusionPiece, chosenPiece) > coins) return;
                     int x = choseSquare((player == Player.WHITE)? whiteCases : blackCases);
                     int y = (player == Player.WHITE)? 7 : 0;
                     System.out.println(chosenPiece);
-                    Piece piece = Piece.fusionPiece(fusionPiece, chosenPiece, x, y, player);
+                    Piece piece = Piece.piece(chosenPiece, x, y, player);
                     if (player == Player.WHITE)
                         whitePieces.add(piece);
                     else
@@ -214,10 +231,10 @@ public class CreatePiece {
                         fusionPiece = chosenPiece;
                         fusionning = true;
                         switch (fusionPiece) {
-                            case ROOK -> chosePieces(stage, new ArrayList<>(List.of(KNIGHT, ROOK)), coins);
-                            case KNIGHT -> chosePieces(stage, new ArrayList<>(List.of(ROOK, BISHOP, QUEEN, KNIGHT)), coins);
-                            case BISHOP -> chosePieces(stage, new ArrayList<>(List.of(KNIGHT, BISHOP)), coins);
-                            case QUEEN -> chosePieces(stage, new ArrayList<>(List.of(KNIGHT, QUEEN)), coins);
+                            case ROOK -> chosePieces(stage, new ArrayList<>(List.of(TROJANHORSE, LIGHTHOUSE)), coins);
+                            case KNIGHT -> chosePieces(stage, new ArrayList<>(List.of(TROJANHORSE, NAZGUL, QUEENIGHT, BUCEPHALE)), coins);
+                            case BISHOP -> chosePieces(stage, new ArrayList<>(List.of(NAZGUL, CARDINAL)), coins);
+                            case QUEEN -> chosePieces(stage, new ArrayList<>(List.of(QUEENIGHT, CHAOS)), coins);
                         }
                     }
                 }

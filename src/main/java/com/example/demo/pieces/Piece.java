@@ -2,6 +2,7 @@ package com.example.demo.pieces;
 
 import com.example.demo.CreatePiece;
 import com.example.demo.pieces.original.pawns.Minion;
+import com.example.demo.pieces.original.pawns.Soldat;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -197,7 +198,6 @@ abstract public class Piece extends ImageView {
 
     @Override
     public String toString() {
-        //return "whitePawn";
         return this.player.toString().toLowerCase() + this.type.toString().substring(0,1).toUpperCase() + this.type.toString().substring(1).toLowerCase();
     }
 
@@ -229,21 +229,13 @@ abstract public class Piece extends ImageView {
             // custom pawns
             case WALL -> new Wall(p, x, y);
             case MINION -> new Minion(p, x, y);
+            case SOLDAT -> new Soldat(p, x, y);
             /*
-                    MINION(-1), // larbin
                     SOLDAT(-1), // soldat
-                    WALL(-1), // muraille
                     INFANTRYMAN(-1), // fantassin
                     CHAMPIFACE(-1), // champiface
                     CURSED_GRAVE(-1), // tombe maudite,
-                    /**
-                     * Original pieces
-                     */
-                    /*BIRD(2), // piaf
-                    PHOENIX(4), // phénix
-                    DRAGON(3), // dragon
-                    GRYFFON(7), // griffon
-                    TWHOMP(-1), // twhomp
+
                     EXCALIBUR(-1), // excalibur
                     SAURON(10), // anciennement "arbre",
                     BOAT(9), // navire*/

@@ -30,6 +30,7 @@ public class CreatePiece {
 
     private static final int NFUSIONPIECES = 3;
     private static final int NMAXCUSTOMPIECES = 4;
+    private static final int NMAXPAWNS = 8;
     private static final int MINCOSTROOKFUSION = Math.min(TROJANHORSE.price, LIGHTHOUSE.price);
     private static final int MINCOSTKNIGHTFUSION = Math.min(Math.min(NAZGUL.price, TROJANHORSE.price), Math.min(QUEENIGHT.price, BUCEPHALE.price));
     private static final int MINCOSTBISHOPFUSION = Math.min(NAZGUL.price, CARDINAL.price);
@@ -42,9 +43,11 @@ public class CreatePiece {
 
     public static int nFusion = 0;
     public static int nCustom = 0;
+    public static int nPawns = 0;
     public static Player player = Player.WHITE;
     public static boolean fusionning = false;
     public static boolean fusion = true;
+    public static boolean customPiece = true;
     public static Piece.Type fusionPiece = null;
     public static ArrayList<Piece> whitePieces = new ArrayList<>();
     public static ArrayList<String> whiteCases = new ArrayList<>(List.of("a", "b", "c", "d", "f", "g", "h"));
@@ -52,16 +55,18 @@ public class CreatePiece {
     public static ArrayList<String> blackCases = new ArrayList<>(List.of("a", "b", "c", "d", "f", "g", "h"));
 
     public static ArrayList<Piece> blackAndWhitePieces = new ArrayList<>();
-    private static final ArrayList<Piece.Type> basicPieces = new ArrayList<>(List.of(ROOK, KNIGHT, BISHOP, QUEEN));
-    private static final ArrayList<Piece.Type> customPieces =
-            new ArrayList<>(List.of(ARACHNE, WALLABY, BIRD, PHOENIX, DRAGON, GRYFFON
-                    /*, TWHOMP, CHAOS, EXCALIBUR, SAURON, BOAT*/));
+    private static final List<Piece.Type> basicPieces = List.of(ROOK, KNIGHT, BISHOP, QUEEN);
+    private static final List<Piece.Type> customPieces = List.of(ARACHNE, WALLABY, BIRD, PHOENIX, DRAGON, GRYFFON,
+                    TWHOMP/*, CHAOS, EXCALIBUR, SAURON, BOAT*/);
+    private static final List<Piece.Type> pawns = List.of(PAWN, MINION, WALL);
 
     public CreatePiece(Stage stage, ArrayList<Piece.Type> pieces, int coins) {
         chosePieces(stage,pieces,coins);
     }
 
-    public void chosePieces(Stage stage, ArrayList<Piece.Type> pieces, int coins) {
+    public void chosePieces(Stage stage, List<Piece.Type> allPieces, int coins) {
+
+        ArrayList<Piece.Type> pieces = new ArrayList<>(allPieces);
 
         Collections.shuffle(pieces);
         Random r = new Random();
@@ -239,55 +244,122 @@ public class CreatePiece {
                     }
                 }
             } else {
-            // Custom piece choice
-                nCustom++;
 
-                // If player pressed "pass", pass
-                if (chosenPiece != null) {
-                    //chosePieces(stage, customPieces, coins);
+                if (customPiece) {
+                    // Custom piece choice
+                    nCustom++;
 
-                    int x = choseSquare((player == Player.WHITE) ? whiteCases : blackCases);
-                    int y = (player == Player.WHITE) ? 7 : 0;
-                    Piece piece = Piece.piece(chosenPiece, x, y, player);
-                    if (player == Player.WHITE)
-                        whitePieces.add(piece);
-                    else
-                        blackPieces.add(piece);
-                    if (nCustom == NMAXCUSTOMPIECES) {
-                        if (player == Player.BLACK){
-                            blackAndWhitePieces.addAll(whitePieces);
-                            blackAndWhitePieces.addAll(blackPieces);
-                            FXMLLoader fxmlLoader = new FXMLLoader(CreatePiece.class.getResource("sample.fxml"));
-                            Parent root = fxmlLoader.load();
-                            stage.setScene(new Scene(root, Main.BOARD_DIM, Main.BOARD_DIM));
-                        } else {
+                    // If player pressed "pass", pass
+                    if (chosenPiece != null) {
+
+                        int x = choseSquare((player == Player.WHITE) ? whiteCases : blackCases);
+                        int y = (player == Player.WHITE) ? 7 : 0;
+                        Piece piece = Piece.piece(chosenPiece, x, y, player);
+                        if (player == Player.WHITE)
+                            whitePieces.add(piece);
+                        else
+                            blackPieces.add(piece);
+                        if (nCustom == NMAXCUSTOMPIECES) {
+                            if (player == Player.BLACK)
+                                blackCases = new ArrayList<>(List.of("a", "b", "c", "d", "e", "f", "g", "h"));
+                            else
+                                whiteCases = new ArrayList<>(List.of("a", "b", "c", "d", "e", "f", "g", "h"));
+                            customPiece = false;
                             nCustom = 0;
-                            fusion = true;
-                            player = Player.BLACK;
-                            chosePieces(stage, basicPieces, Main.N_COINS);
-                        }
-                    }
-                    else
-                        chosePieces(stage, customPieces, coins - piece.getType().price);
+                            chosePieces(stage, pawns, coins - piece.getType().price);
 
+                            /*if (player == Player.BLACK) {
+                                blackAndWhitePieces.addAll(whitePieces);
+                                blackAndWhitePieces.addAll(blackPieces);
+                                FXMLLoader fxmlLoader = new FXMLLoader(CreatePiece.class.getResource("sample.fxml"));
+                                Parent root = fxmlLoader.load();
+                                stage.setScene(new Scene(root, Main.BOARD_DIM, Main.BOARD_DIM));
+                            } else {
+                                nCustom = 0;
+                                fusion = true;
+                                player = Player.BLACK;
+                                chosePieces(stage, basicPieces, Main.N_COINS);
+                            }*/
+                        } else
+                            chosePieces(stage, customPieces, coins - piece.getType().price);
+
+                    } else {
+                        if (nCustom == NMAXCUSTOMPIECES) {
+                            if (player == Player.BLACK)
+                                blackCases = new ArrayList<>(List.of("a", "b", "c", "d", "e", "f", "g", "h"));
+                             else
+                                whiteCases = new ArrayList<>(List.of("a", "b", "c", "d", "e", "f", "g", "h"));
+
+                            customPiece = false;
+                            nCustom = 0;
+                            chosePieces(stage, pawns, coins);
+                            /*if (player == Player.BLACK) {
+                                stage.setTitle("Fairy Chess");
+                                blackAndWhitePieces.addAll(whitePieces);
+                                blackAndWhitePieces.addAll(blackPieces);
+                                FXMLLoader fxmlLoader = new FXMLLoader(CreatePiece.class.getResource("sample.fxml"));
+                                Parent root = fxmlLoader.load();
+                                stage.setScene(new Scene(root, Main.BOARD_DIM, Main.BOARD_DIM));
+                            } else {
+                                nCustom = 0;
+                                fusion = true;
+                                player = Player.BLACK;
+                                chosePieces(stage, basicPieces, Main.N_COINS);
+                            }*/
+                        } else
+                            chosePieces(stage, customPieces, coins);
+                    }
                 } else {
-                    if (nCustom == NMAXCUSTOMPIECES) {
-                        if (player == Player.BLACK){
-                            stage.setTitle("Fairy Chess");
-                            blackAndWhitePieces.addAll(whitePieces);
-                            blackAndWhitePieces.addAll(blackPieces);
-                            FXMLLoader fxmlLoader = new FXMLLoader(CreatePiece.class.getResource("sample.fxml"));
-                            Parent root = fxmlLoader.load();
-                            stage.setScene(new Scene(root, Main.BOARD_DIM, Main.BOARD_DIM));
-                        } else {
-                            nCustom = 0;
-                            fusion = true;
-                            player = Player.BLACK;
-                            chosePieces(stage, basicPieces, Main.N_COINS);
-                        }
+                    // Pawns choice
+                    nPawns++;
+
+                    if (chosenPiece != null){
+
+                        int x = choseSquare((player == Player.WHITE) ? whiteCases : blackCases);
+                        int y = (player == Player.WHITE) ? 6 : 1;
+                        Piece piece = Piece.piece(chosenPiece, x, y, player);
+                        if (player == Player.WHITE)
+                            whitePieces.add(piece);
+                        else
+                            blackPieces.add(piece);
+
+                        if (nPawns == NMAXPAWNS) {
+                            if (player == Player.BLACK) {
+                                blackAndWhitePieces.addAll(whitePieces);
+                                blackAndWhitePieces.addAll(blackPieces);
+                                FXMLLoader fxmlLoader = new FXMLLoader(CreatePiece.class.getResource("sample.fxml"));
+                                Parent root = fxmlLoader.load();
+                                stage.setScene(new Scene(root, Main.BOARD_DIM, Main.BOARD_DIM));
+                            } else {
+                                nCustom = 0;
+                                nPawns = 0;
+                                fusion = true;
+                                customPiece = true;
+                                player = Player.BLACK;
+                                chosePieces(stage, basicPieces, Main.N_COINS);
+                            }
+                        } else
+                            chosePieces(stage, pawns, coins - piece.getType().price);
+                    } else {
+                        if (nPawns == NMAXPAWNS) {
+                            if (player == Player.BLACK) {
+                                stage.setTitle("Fairy Chess");
+                                blackAndWhitePieces.addAll(whitePieces);
+                                blackAndWhitePieces.addAll(blackPieces);
+                                FXMLLoader fxmlLoader = new FXMLLoader(CreatePiece.class.getResource("sample.fxml"));
+                                Parent root = fxmlLoader.load();
+                                stage.setScene(new Scene(root, Main.BOARD_DIM, Main.BOARD_DIM));
+                            } else {
+                                nCustom = 0;
+                                nPawns = 0;
+                                fusion = true;
+                                customPiece = true;
+                                player = Player.BLACK;
+                                chosePieces(stage, basicPieces, Main.N_COINS);
+                            }
+                        } else
+                            chosePieces(stage, pawns, coins);
                     }
-                    else
-                        chosePieces(stage, customPieces, coins);
                 }
             }
         //}
@@ -311,6 +383,7 @@ public class CreatePiece {
             case "b" -> 1;
             case "c" -> 2;
             case "d" -> 3;
+            case "e" -> 4;
             case "f" -> 5;
             case "g" -> 6;
             case "h" -> 7;

@@ -13,6 +13,7 @@ public class Wall extends Piece {
     public Wall(Player player, int x, int y) {
         super(player, x, y);
         this.type = WALL;
+        setImage();
     }
 
     @Override

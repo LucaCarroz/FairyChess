@@ -25,6 +25,8 @@ import java.util.List;
 
 import static com.example.demo.Main.primaryStage;
 import static com.example.demo.pieces.Piece.Type.*;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 public class Game {
 
@@ -209,6 +211,32 @@ public class Game {
             killedPawn.setOccupancy(false);
         }
 
+        if (currentPiece.getType() == TWHOMP){
+            int startY = initialSquare.getY();
+            int endY = square.getY();
+            System.out.println("satart");
+            if (startY > endY){
+                for (int i = endY + 1; i < startY; i++) {
+                    System.out.println(i);
+                    Square killedPiece = cb.getSquare(initialSquare.getX(), i);
+                    if (killedPiece.isOccupied()) {
+                        killedPiece.getChildren().remove(0);
+                        killedPiece.setOccupancy(false);
+                    }
+                }
+            }
+            if (startY < endY){
+                for (int i = startY + 1; i < endY; i++) {
+                    System.out.println(i);
+                    Square killedPiece = cb.getSquare(initialSquare.getX(), i);
+                    if (killedPiece.isOccupied()) {
+                        killedPiece.getChildren().remove(0);
+                        killedPiece.setOccupancy(false);
+                    }
+                }
+            }
+        }
+
         if (currentPiece.playsTwice()){
             if (currentPiece.justPlayed()){
                 isPlayingTwice = false;
@@ -227,6 +255,31 @@ public class Game {
 
     private void killPiece(Square square){
         if(!currentPiece.getAllPossibleMoves().contains(new Move(square))) return;
+
+        Square initialSquare = (Square) currentPiece.getParent();
+        if (currentPiece.getType() == TWHOMP){
+            int startY = initialSquare.getY();
+            int endY = square.getY();
+
+            if (startY > endY){
+                for (int i = endY + 1; i < startY - 1; i++) {
+                    Square killedPiece = cb.getSquare(initialSquare.getX(), i);
+                    if (killedPiece.isOccupied()) {
+                        killedPiece.getChildren().remove(0);
+                        killedPiece.setOccupancy(false);
+                    }
+                }
+            }
+            if (startY < endY){
+                for (int i = startY + 1; i < endY - 1; i++) {
+                    Square killedPiece = cb.getSquare(initialSquare.getX(), i);
+                    if (killedPiece.isOccupied()) {
+                        killedPiece.getChildren().remove(0);
+                        killedPiece.setOccupancy(false);
+                    }
+                }
+            }
+        }
 
         Piece killedPiece = (Piece) square.getChildren().get(0);
         if(killedPiece.getType() == KING) {
@@ -260,8 +313,6 @@ public class Game {
             dialog.show();
         }
 
-
-        Square initialSquare = (Square) currentPiece.getParent();
         square.getChildren().remove(0);
         square.getChildren().add(currentPiece);
         square.setOccupancy(true);
@@ -289,9 +340,11 @@ public class Game {
     private void cleanUp() {
         CreatePiece.nFusion = 0;
         CreatePiece.nCustom = 0;
+        CreatePiece.nPawns = 0;
         CreatePiece.player = Player.WHITE;
         CreatePiece.fusionning = false;
         CreatePiece.fusion = true;
+        CreatePiece.customPiece = true;
         CreatePiece.fusionPiece = null;
         CreatePiece.whitePieces = new ArrayList<>();
         CreatePiece.whiteCases = new ArrayList<>(List.of("a", "b", "c", "d", "f", "g", "h"));

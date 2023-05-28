@@ -144,10 +144,10 @@ public class ChessBoard {
                         addPiece(square, piece);
                 }
                 // TODO: remove this when new pawns implemented
-                if (square.getY() == 1)
+                /*if (square.getY() == 1)
                     addPiece(square, new Pawn(Player.BLACK, square.getX(), square.getY()));
                 if (square.getY() == 6)
-                    addPiece(square, new Pawn(Player.WHITE, square.getX(), square.getY()));
+                    addPiece(square, new Pawn(Player.WHITE, square.getX(), square.getY()));*/
                 if (square.getX() == 4 && square.getY() == 0)
                     addPiece(square, new King(Player.BLACK, square.getX(), square.getY()));
                 if (square.getX() == 4 && square.getY() == 7)

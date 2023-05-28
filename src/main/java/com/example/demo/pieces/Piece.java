@@ -1,6 +1,7 @@
 package com.example.demo.pieces;
 
 import com.example.demo.CreatePiece;
+import com.example.demo.pieces.original.pawns.Minion;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -64,7 +65,7 @@ abstract public class Piece extends ImageView {
         PHOENIX(4), // phénix TODO: add respawn
         DRAGON(3), // dragon
         GRYFFON(7), // griffon
-        TWHOMP(-1), // twhomp TODO: (pas compris la def)
+        TWHOMP(5), // twhomp
         EXCALIBUR(-1), // excalibur //TODO
         SAURON(10), // anciennement "arbre", //TODO
         BOAT(9), // navire //TODO
@@ -186,6 +187,10 @@ abstract public class Piece extends ImageView {
         return null;
     }
 
+    public static Piece getPiece(int x, int y){
+        return getPieceByMove(new Move(x, y));
+    }
+
     public static Piece getPieceByMove(Move move){
         return getPieceByName("Square" + (move.x) + (move.y));
     }
@@ -220,9 +225,10 @@ abstract public class Piece extends ImageView {
             case PHOENIX -> new Phoenix(p, x, y);
             case DRAGON -> new Dragon(p, x, y);
             case GRYFFON -> new Gryffon(p, x, y);
+            case TWHOMP -> new Twhomp(p, x, y);
             // custom pawns
             case WALL -> new Wall(p, x, y);
-
+            case MINION -> new Minion(p, x, y);
             /*
                     MINION(-1), // larbin
                     SOLDAT(-1), // soldat

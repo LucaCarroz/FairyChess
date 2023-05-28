@@ -36,10 +36,10 @@ public class Main extends Application {
         primaryStage.setTitle("Fairy Chess");
 
         // Create a button to start a new game
-        Button newGameButton = new Button("New Game");
+        Button newGameButton = new Button("Nouvelle partie");
         newGameButton.setFont(Font.font("Verdana", FontWeight.BOLD, 24));
-        newGameButton.setStyle("-fx-background-color: #99CCFF; -fx-text-fill: white; -fx-border-color: white; -fx-border-radius: 20;");
-        newGameButton.setPrefSize(200, 100);
+        newGameButton.setStyle("-fx-background-color: #111111; -fx-text-fill: white; -fx-border-color: white;");
+        newGameButton.setPrefSize(250, 100);
         newGameButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -52,25 +52,43 @@ public class Main extends Application {
             }
         });
 
+        // Create a button to start a new game
+        Button rulesButton = new Button("Règles");
+        rulesButton.setFont(Font.font("Verdana", FontWeight.BOLD, 24));
+        rulesButton.setStyle("-fx-background-color: #111111; -fx-text-fill: white; -fx-border-color: white;");
+        rulesButton.setPrefSize(150, 100);
+        rulesButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Start a new game here
+                try {
+                    //new CreatePiece(primaryStage, new ArrayList<>(List.of(ROOK, KNIGHT, BISHOP, QUEEN)), N_COINS);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         // Create a label with a welcome message
-        Label welcomeLabel = new Label("Welcome to Fairy Chess!");
-        welcomeLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 40));
-        welcomeLabel.setTextFill(Color.WHITE);
+        Label welcomeLabel = new Label("Bienvenue dans Fairy Chess!");
+        welcomeLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 38));
+        welcomeLabel.setTextFill(Color.DARKRED);
 
         // Create a background image for the greeting screen
-        ImageView background = new ImageView(new Image(getClass().getResourceAsStream("background.jpg")));
+        ImageView background = new ImageView(new Image(getClass().getResourceAsStream("background.png")));
         background.fitWidthProperty().bind(primaryStage.widthProperty());
         background.fitHeightProperty().bind(primaryStage.heightProperty());
 
         // Create a stack pane to hold the greeting screen components
         StackPane greetingPane = new StackPane();
-        greetingPane.getChildren().addAll(background, welcomeLabel, newGameButton);
+        greetingPane.getChildren().addAll(background, welcomeLabel, newGameButton, rulesButton);
         greetingPane.setAlignment(Pos.CENTER);
         greetingPane.setPrefSize(SCENE_DIM, SCENE_DIM);
 
         // Set the position of the button and the label
-        newGameButton.setTranslateY(100);
-        welcomeLabel.setTranslateY(-100);
+        rulesButton.setTranslateY(255);
+        newGameButton.setTranslateY(150);
+        welcomeLabel.setTranslateY(-200);
 
         // Set the greeting screen as the primary scene
         primaryStage.setScene(new Scene(greetingPane));

@@ -14,10 +14,10 @@ public class ChessBoard {
 
     public static final int SQUARE_DIM = 80;
     private final GridPane chessBoard;
-    String theme;
+    Theme theme;
     public ArrayList<Square> squares = new ArrayList<>();
 
-    public ChessBoard(GridPane chessBoard, String theme, List<Piece> pieces){
+    public ChessBoard(GridPane chessBoard, Theme theme, List<Piece> pieces){
         this.chessBoard = chessBoard;
         this.theme = theme;
 
@@ -32,7 +32,7 @@ public class ChessBoard {
         throw new IllegalArgumentException("Invalid x and y: x = " + x + ",y = " + y);
     }
 
-    private void makeBoard(GridPane chessBoard, String theme, List<Piece> pieces){
+    private void makeBoard(GridPane chessBoard, Theme theme, List<Piece> pieces){
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
                 Square square = new Square(i,j, "Square" + i + j);
@@ -48,41 +48,12 @@ public class ChessBoard {
         addPieces(pieces);
     }
 
-    private void setTheme(Square square, String theme, int i, int j){
-        Color color1 = Color.web("#ffffff00");
-        Color color2 = Color.web("#ffffff00");
-
-        switch (theme) {
-            case "Coral" -> {
-                color1 = Color.web("#b1e4b9");
-                color2 = Color.web("#70a2a3");
-            }
-            case "Dusk" -> {
-                color1 = Color.web("#cbb7ae");
-                color2 = Color.web("#716677");
-            }
-            case "Wheat" -> {
-                color1 = Color.web("#eaefce");
-                color2 = Color.web("#bbbe65");
-            }
-            case "Marine" -> {
-                color1 = Color.web("#9dacff");
-                color2 = Color.web("#6f74d2");
-            }
-            case "Emerald" -> {
-                color1 = Color.web("#adbd90");
-                color2 = Color.web("#6e8f72");
-            }
-            case "Sandcastle" -> {
-                color1 = Color.web("#e4c16f");
-                color2 = Color.web("#b88b4a");
-            }
-        }
+    private void setTheme(Square square, Theme theme, int i, int j){
 
         if((i+j)%2==0){
-            square.setBackground(new Background(new BackgroundFill(color1, CornerRadii.EMPTY, Insets.EMPTY)));
+            square.setBackground(new Background(new BackgroundFill(theme.color1, CornerRadii.EMPTY, Insets.EMPTY)));
         }else{
-            square.setBackground(new Background(new BackgroundFill(color2, CornerRadii.EMPTY, Insets.EMPTY)));
+            square.setBackground(new Background(new BackgroundFill(theme.color2, CornerRadii.EMPTY, Insets.EMPTY)));
         }
 
     }
@@ -143,11 +114,6 @@ public class ChessBoard {
                     if (square.getX() == piece.x() && square.getY() == piece.y())
                         addPiece(square, piece);
                 }
-                // TODO: remove this when new pawns implemented
-                /*if (square.getY() == 1)
-                    addPiece(square, new Pawn(Player.BLACK, square.getX(), square.getY()));
-                if (square.getY() == 6)
-                    addPiece(square, new Pawn(Player.WHITE, square.getX(), square.getY()));*/
                 if (square.getX() == 4 && square.getY() == 0)
                     addPiece(square, new King(Player.BLACK, square.getX(), square.getY()));
                 if (square.getX() == 4 && square.getY() == 7)

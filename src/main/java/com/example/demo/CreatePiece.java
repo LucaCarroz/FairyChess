@@ -182,6 +182,9 @@ public class CreatePiece {
 
         // create VBox to hold image views and buttons
         VBox root = new VBox(20);
+        // Hide pass button if user is not allowed to pass
+        if ((fusion && fusionning) || (!fusion && !customPiece))
+        {}//passButton.setVisible(false); //TODO: uncomment this
         root.getChildren().addAll(coinHB, imagesHB, buttonsHB, passButton);
         root.setPadding(new Insets(20));
         root.setAlignment(Pos.CENTER);

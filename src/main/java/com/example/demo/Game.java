@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.board.Theme;
 import javafx.event.EventTarget;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -25,8 +26,6 @@ import java.util.List;
 
 import static com.example.demo.Main.primaryStage;
 import static com.example.demo.pieces.Piece.Type.*;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 
 public class Game {
 
@@ -40,7 +39,7 @@ public class Game {
     private Player playerThatJustAdvancedTwoSquares;
     private Pawn pawnThatJustAdvancedTwoSquares;
 
-    public Game(GridPane chessBoard, String theme, List<Piece> pieces){
+    public Game(GridPane chessBoard, Theme theme, List<Piece> pieces){
         cb = new ChessBoard(chessBoard, theme, pieces);
         currentPiece = null;
         currentPlayer = Player.WHITE;

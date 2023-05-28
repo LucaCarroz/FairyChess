@@ -35,14 +35,14 @@ public class Twhomp extends Piece {
 
         for(int j=y-1; j>=0; j--){
             move = new Move(x, j);
-            if(getSquareByMove(move).isOccupied() && getPieceByMove(move).getPlayer().equals(Game.currentPlayer)) break;
+            if(getSquareByMove(move).isOccupied() && (getPieceByMove(move).getPlayer().equals(Game.currentPlayer) || getPieceByMove(move).isInvincible())) break;
 
             possMoves.add(move);
         }
 
         for(int j=y+1; j<8; j++){
             move = new Move(x, j);
-            if(getSquareByMove(move).isOccupied() && getPieceByMove(move).getPlayer().equals(Game.currentPlayer)) break;
+            if(getSquareByMove(move).isOccupied() && (getPieceByMove(move).getPlayer().equals(Game.currentPlayer) || getPieceByMove(move).isInvincible())) break;
 
             possMoves.add(move);
         }

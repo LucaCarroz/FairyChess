@@ -214,10 +214,8 @@ public class Game {
         if (currentPiece.getType() == TWHOMP){
             int startY = initialSquare.getY();
             int endY = square.getY();
-            System.out.println("satart");
             if (startY > endY){
                 for (int i = endY + 1; i < startY; i++) {
-                    System.out.println(i);
                     Square killedPiece = cb.getSquare(initialSquare.getX(), i);
                     if (killedPiece.isOccupied()) {
                         killedPiece.getChildren().remove(0);
@@ -227,7 +225,6 @@ public class Game {
             }
             if (startY < endY){
                 for (int i = startY + 1; i < endY; i++) {
-                    System.out.println(i);
                     Square killedPiece = cb.getSquare(initialSquare.getX(), i);
                     if (killedPiece.isOccupied()) {
                         killedPiece.getChildren().remove(0);
@@ -262,7 +259,7 @@ public class Game {
             int endY = square.getY();
 
             if (startY > endY){
-                for (int i = endY + 1; i < startY - 1; i++) {
+                for (int i = endY + 1; i < startY; i++) {
                     Square killedPiece = cb.getSquare(initialSquare.getX(), i);
                     if (killedPiece.isOccupied()) {
                         killedPiece.getChildren().remove(0);
@@ -271,7 +268,7 @@ public class Game {
                 }
             }
             if (startY < endY){
-                for (int i = startY + 1; i < endY - 1; i++) {
+                for (int i = startY + 1; i < endY; i++) {
                     Square killedPiece = cb.getSquare(initialSquare.getX(), i);
                     if (killedPiece.isOccupied()) {
                         killedPiece.getChildren().remove(0);

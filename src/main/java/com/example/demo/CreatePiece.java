@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.utils.Math;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -31,14 +32,14 @@ public class CreatePiece {
     private static final int NFUSIONPIECES = 3;
     private static final int NMAXCUSTOMPIECES = 4;
     private static final int NMAXPAWNS = 8;
-    private static final int MINCOSTROOKFUSION = Math.min(TROJANHORSE.price, LIGHTHOUSE.price);
-    private static final int MINCOSTKNIGHTFUSION = Math.min(Math.min(NAZGUL.price, TROJANHORSE.price), Math.min(QUEENIGHT.price, BUCEPHALE.price));
-    private static final int MINCOSTBISHOPFUSION = Math.min(NAZGUL.price, CARDINAL.price);
-    private static final int MINCOSTQUEENFUSION = Math.min(QUEENIGHT.price, CHAOS.price);
-    private static final int MAXCOSTROOKFUSION = Math.max(TROJANHORSE.price, LIGHTHOUSE.price);
-    private static final int MAXCOSTKNIGHTFUSION = Math.max(Math.max(NAZGUL.price, TROJANHORSE.price), Math.max(QUEENIGHT.price, BUCEPHALE.price));
-    private static final int MAXCOSTBISHOPFUSION = Math.max(NAZGUL.price, CARDINAL.price);
-    private static final int MAXCOSTQUEENFUSION = Math.max(QUEENIGHT.price, CHAOS.price);
+    private static final int MINCOSTROOKFUSION = Math.min(TROJANHORSE.price, LIGHTHOUSE.price, ROOK.price);
+    private static final int MINCOSTKNIGHTFUSION = Math.min(NAZGUL.price, TROJANHORSE.price, QUEENIGHT.price, BUCEPHALE.price, KNIGHT.price);
+    private static final int MINCOSTBISHOPFUSION = Math.min(NAZGUL.price, CARDINAL.price, BISHOP.price);
+    private static final int MINCOSTQUEENFUSION = Math.min(QUEENIGHT.price, CHAOS.price, QUEEN.price);
+    private static final int MAXCOSTROOKFUSION = Math.max(TROJANHORSE.price, LIGHTHOUSE.price, ROOK.price);
+    private static final int MAXCOSTKNIGHTFUSION = Math.max(NAZGUL.price, TROJANHORSE.price, QUEENIGHT.price, BUCEPHALE.price, KNIGHT.price);
+    private static final int MAXCOSTBISHOPFUSION = Math.max(NAZGUL.price, CARDINAL.price, BISHOP.price);
+    private static final int MAXCOSTQUEENFUSION = Math.max(QUEENIGHT.price, CHAOS.price, QUEEN.price);
 
 
     public static int nFusion = 0;
@@ -236,10 +237,10 @@ public class CreatePiece {
                         fusionPiece = chosenPiece;
                         fusionning = true;
                         switch (fusionPiece) {
-                            case ROOK -> chosePieces(stage, new ArrayList<>(List.of(TROJANHORSE, LIGHTHOUSE)), coins);
-                            case KNIGHT -> chosePieces(stage, new ArrayList<>(List.of(TROJANHORSE, NAZGUL, QUEENIGHT, BUCEPHALE)), coins);
-                            case BISHOP -> chosePieces(stage, new ArrayList<>(List.of(NAZGUL, CARDINAL)), coins);
-                            case QUEEN -> chosePieces(stage, new ArrayList<>(List.of(QUEENIGHT, CHAOS)), coins);
+                            case ROOK -> chosePieces(stage, new ArrayList<>(List.of(TROJANHORSE, LIGHTHOUSE, ROOK)), coins);
+                            case KNIGHT -> chosePieces(stage, new ArrayList<>(List.of(TROJANHORSE, NAZGUL, QUEENIGHT, BUCEPHALE, KNIGHT)), coins);
+                            case BISHOP -> chosePieces(stage, new ArrayList<>(List.of(NAZGUL, CARDINAL, BISHOP)), coins);
+                            case QUEEN -> chosePieces(stage, new ArrayList<>(List.of(QUEENIGHT, CHAOS, QUEEN)), coins);
                         }
                     }
                 }
@@ -267,19 +268,6 @@ public class CreatePiece {
                             customPiece = false;
                             nCustom = 0;
                             chosePieces(stage, pawns, coins - piece.getType().price);
-
-                            /*if (player == Player.BLACK) {
-                                blackAndWhitePieces.addAll(whitePieces);
-                                blackAndWhitePieces.addAll(blackPieces);
-                                FXMLLoader fxmlLoader = new FXMLLoader(CreatePiece.class.getResource("sample.fxml"));
-                                Parent root = fxmlLoader.load();
-                                stage.setScene(new Scene(root, Main.BOARD_DIM, Main.BOARD_DIM));
-                            } else {
-                                nCustom = 0;
-                                fusion = true;
-                                player = Player.BLACK;
-                                chosePieces(stage, basicPieces, Main.N_COINS);
-                            }*/
                         } else
                             chosePieces(stage, customPieces, coins - piece.getType().price);
 
@@ -293,19 +281,6 @@ public class CreatePiece {
                             customPiece = false;
                             nCustom = 0;
                             chosePieces(stage, pawns, coins);
-                            /*if (player == Player.BLACK) {
-                                stage.setTitle("Fairy Chess");
-                                blackAndWhitePieces.addAll(whitePieces);
-                                blackAndWhitePieces.addAll(blackPieces);
-                                FXMLLoader fxmlLoader = new FXMLLoader(CreatePiece.class.getResource("sample.fxml"));
-                                Parent root = fxmlLoader.load();
-                                stage.setScene(new Scene(root, Main.BOARD_DIM, Main.BOARD_DIM));
-                            } else {
-                                nCustom = 0;
-                                fusion = true;
-                                player = Player.BLACK;
-                                chosePieces(stage, basicPieces, Main.N_COINS);
-                            }*/
                         } else
                             chosePieces(stage, customPieces, coins);
                     }

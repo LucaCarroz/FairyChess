@@ -109,11 +109,6 @@ public class Game {
             else if (target instanceof Piece newPiece){
                 Square square = (Square) newPiece.getParent();
                 // Selecting a new piece
-                /*if (isPlayingTwice && newPiece != playingTwice) {
-                    if (currentPiece != null) deselectPiece(false);
-                    currentPiece = null;
-                    return;
-                }*/
                 if (isPlayingTwice){
                     if (currentPiece == null){
                         currentPiece = newPiece;
@@ -211,12 +206,15 @@ public class Game {
         }
 
         if (currentPiece.getType() == TWHOMP){
+            Piece killedKing = null;
             int startY = initialSquare.getY();
             int endY = square.getY();
             if (startY > endY){
                 for (int i = endY + 1; i < startY; i++) {
                     Square killedPiece = cb.getSquare(initialSquare.getX(), i);
                     if (killedPiece.isOccupied()) {
+                        if (((Piece)killedPiece.getChildren().get(0)).getType() == KING)
+                            killedKing = (Piece)killedPiece.getChildren().get(0);
                         killedPiece.getChildren().remove(0);
                         killedPiece.setOccupancy(false);
                     }
@@ -226,11 +224,14 @@ public class Game {
                 for (int i = startY + 1; i < endY; i++) {
                     Square killedPiece = cb.getSquare(initialSquare.getX(), i);
                     if (killedPiece.isOccupied()) {
+                        if (((Piece)killedPiece.getChildren().get(0)).getType() == KING)
+                            killedKing = (Piece)killedPiece.getChildren().get(0);
                         killedPiece.getChildren().remove(0);
                         killedPiece.setOccupancy(false);
                     }
                 }
             }
+            if (killedKing != null) endGame(killedKing);
         }
 
         if (currentPiece.playsTwice()){
@@ -254,6 +255,7 @@ public class Game {
 
         Square initialSquare = (Square) currentPiece.getParent();
         if (currentPiece.getType() == TWHOMP){
+            Piece killedKing = null;
             int startY = initialSquare.getY();
             int endY = square.getY();
 
@@ -261,6 +263,8 @@ public class Game {
                 for (int i = endY + 1; i < startY; i++) {
                     Square killedPiece = cb.getSquare(initialSquare.getX(), i);
                     if (killedPiece.isOccupied()) {
+                        if (((Piece)killedPiece.getChildren().get(0)).getType() == KING)
+                            killedKing = (Piece)killedPiece.getChildren().get(0);
                         killedPiece.getChildren().remove(0);
                         killedPiece.setOccupancy(false);
                     }
@@ -270,44 +274,19 @@ public class Game {
                 for (int i = startY + 1; i < endY; i++) {
                     Square killedPiece = cb.getSquare(initialSquare.getX(), i);
                     if (killedPiece.isOccupied()) {
+                        if (((Piece)killedPiece.getChildren().get(0)).getType() == KING)
+                            killedKing = (Piece)killedPiece.getChildren().get(0);
                         killedPiece.getChildren().remove(0);
                         killedPiece.setOccupancy(false);
                     }
                 }
             }
+            if (killedKing != null) endGame(killedKing);
         }
 
         Piece killedPiece = (Piece) square.getChildren().get(0);
-        if(killedPiece.getType() == KING) {
-            this.game = false;
-            Stage dialog = new Stage();
-            dialog.initStyle(StageStyle.DECORATED); // Set the stage style to transparent
-
-            Text text;
-            if (killedPiece.getPlayer() == Player.WHITE){
-                text = new Text("Les noirs ont gagné !");
-            } else {
-                text = new Text("Les blancs ont gagné !");
-            }
-            text.setFont(Font.font(24));
-            text.setTextAlignment(TextAlignment.CENTER);
-
-            Button newGameButton = new Button("Nouvelle partie");
-            newGameButton.setOnAction(event -> {
-                // Code to start a new game
-                dialog.close(); // Close the dialog after starting a new game
-                cleanUp();
-                new CreatePiece(primaryStage, new ArrayList<>(List.of(ROOK, KNIGHT, BISHOP, QUEEN)), Main.N_COINS);
-            });
-
-            VBox vbox = new VBox(text, newGameButton);
-            vbox.setAlignment(Pos.CENTER);
-            vbox.setSpacing(20);
-
-            Scene dialogScene = new Scene(vbox, 300, 200);
-            dialog.setScene(dialogScene);
-            dialog.show();
-        }
+        if(killedPiece.getType() == KING)
+            endGame(killedPiece);
 
         square.getChildren().remove(0);
         square.getChildren().add(currentPiece);
@@ -331,6 +310,37 @@ public class Game {
         } else {
             deselectPiece(true);
         }
+    }
+
+    private void endGame(Piece killedKing) {
+        this.game = false;
+        Stage dialog = new Stage();
+        dialog.initStyle(StageStyle.DECORATED); // Set the stage style to transparent
+
+        Text text;
+        if (killedKing.getPlayer() == Player.WHITE){
+            text = new Text("Les noirs ont gagné !");
+        } else {
+            text = new Text("Les blancs ont gagné !");
+        }
+        text.setFont(Font.font(24));
+        text.setTextAlignment(TextAlignment.CENTER);
+
+        Button newGameButton = new Button("Nouvelle partie");
+        newGameButton.setOnAction(event -> {
+            // Code to start a new game
+            dialog.close(); // Close the dialog after starting a new game
+            cleanUp();
+            new CreatePiece(primaryStage, new ArrayList<>(List.of(ROOK, KNIGHT, BISHOP, QUEEN)), Main.N_COINS);
+        });
+
+        VBox vbox = new VBox(text, newGameButton);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setSpacing(20);
+
+        Scene dialogScene = new Scene(vbox, 300, 200);
+        dialog.setScene(dialogScene);
+        dialog.show();
     }
 
     private void cleanUp() {

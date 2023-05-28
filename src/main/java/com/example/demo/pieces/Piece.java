@@ -49,11 +49,11 @@ abstract public class Piece extends ImageView {
         /**
          * Original pawns
          */
-        MINION(-1), // larbin //TODO change cost
-        SOLDAT(-1), // soldat //TODO change cost
-        WALL(-1), // muraille //TODO change cost
-        INFANTRYMAN(-1), // fantassin //TODO change cost
-        CHAMPIFACE(-1), // champiface //TODO change cost
+        MINION(2), // larbin //TODO change cost
+        SOLDAT(3), // soldat //TODO change cost
+        WALL(1), // muraille //TODO change cost
+        INFANTRYMAN(3), // fantassin //TODO change cost
+        CHAMPIFACE(0), // champiface //TODO change cost
         CURSEDGRAVE(-1), // tombe maudite, //TODO
         /**
          * Original pieces

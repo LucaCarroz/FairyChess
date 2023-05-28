@@ -82,8 +82,7 @@ public class CreatePiece {
             String path = "images/" + player.toString().toLowerCase() + pieces.get(i).toString().substring(0, 1).toUpperCase() + pieces.get(i).toString().substring(1).toLowerCase() + ".png";
             System.out.println(path);
             ImageView image  = new ImageView(new Image(getClass().getResourceAsStream(path)));
-            // TODO: change the "pieces.get(i).price" when we are doing fusions to display the correct price
-            String cost = "-1$";
+            String cost = "-999$";
             if (fusion && !fusionning){
                 switch(pieces.get(i)) {
                     case ROOK -> cost = "$" + MINCOSTROOKFUSION + "-" + MAXCOSTROOKFUSION;
@@ -184,7 +183,7 @@ public class CreatePiece {
         VBox root = new VBox(20);
         // Hide pass button if user is not allowed to pass
         if ((fusion && fusionning) || (!fusion && !customPiece))
-        {}//passButton.setVisible(false); //TODO: uncomment this
+            passButton.setVisible(false);
         root.getChildren().addAll(coinHB, imagesHB, buttonsHB, passButton);
         root.setPadding(new Insets(20));
         root.setAlignment(Pos.CENTER);

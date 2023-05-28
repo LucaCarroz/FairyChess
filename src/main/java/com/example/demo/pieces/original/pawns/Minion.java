@@ -8,12 +8,14 @@ import com.example.demo.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.demo.pieces.Piece.Type.MINION;
+
 
 public class Minion extends Piece {
 
     public Minion(Player player, int x, int y) {
         super(player, x, y);
-        this.type = Type.MINION;
+        this.type = MINION;
         setImage();
     }
 
@@ -39,6 +41,6 @@ public class Minion extends Piece {
             }
         }
         return moves.stream()
-                .filter(m -> !(getSquareByMove(m).isOccupied() && getPieceByMove(m).getType() == Type.WALL)).toList();
+                .filter(m -> !(getSquareByMove(m).isOccupied() && getPieceByMove(m).isInvincible())).toList();
     }
 }

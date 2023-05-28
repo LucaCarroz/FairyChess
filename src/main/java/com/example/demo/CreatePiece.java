@@ -58,7 +58,7 @@ public class CreatePiece {
     private static final List<Piece.Type> basicPieces = List.of(ROOK, KNIGHT, BISHOP, QUEEN);
     private static final List<Piece.Type> customPieces = List.of(ARACHNE, WALLABY, BIRD, PHOENIX, DRAGON, GRYFFON,
                     TWHOMP/*, CHAOS, EXCALIBUR, SAURON, BOAT*/);
-    private static final List<Piece.Type> pawns = List.of(PAWN, MINION, WALL, SOLDAT);
+    private static final List<Piece.Type> pawns = List.of(PAWN, MINION, WALL, SOLDAT, INFANTRYMAN);
 
     public CreatePiece(Stage stage, ArrayList<Piece.Type> pieces, int coins) {
         chosePieces(stage,pieces,coins);

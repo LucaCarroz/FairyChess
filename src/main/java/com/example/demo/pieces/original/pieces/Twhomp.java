@@ -38,8 +38,6 @@ public class Twhomp extends Piece {
             if(getSquareByMove(move).isOccupied() && getPieceByMove(move).getPlayer().equals(Game.currentPlayer)) break;
 
             possMoves.add(move);
-
-            //if(getSquareByMove(move).isOccupied() && !getPieceByMove(move).getPlayer().equals(Game.currentPlayer)) break;
         }
 
         for(int j=y+1; j<8; j++){
@@ -47,8 +45,6 @@ public class Twhomp extends Piece {
             if(getSquareByMove(move).isOccupied() && getPieceByMove(move).getPlayer().equals(Game.currentPlayer)) break;
 
             possMoves.add(move);
-
-            //if(getSquareByMove(move).isOccupied() && !getPieceByMove(move).getPlayer().equals(Game.currentPlayer)) break;
         }
 
         if(x>0 && (!getSquare(x-1, y).isOccupied() || !getPiece(x-1, y).getPlayer().equals(Game.currentPlayer)))
@@ -58,7 +54,7 @@ public class Twhomp extends Piece {
             possMoves.add(new Move(x+1, y));
 
         return possMoves.stream()
-                .filter(m -> !(getSquareByMove(m).isOccupied() && getPieceByMove(m).getType() == Type.WALL))
+                .filter(m -> !(getSquareByMove(m).isOccupied() && getPieceByMove(m).isInvincible()))
                 .toList();
     }
 }

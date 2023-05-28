@@ -46,7 +46,7 @@ public class Arachne extends Piece {
         }
 
         return possMoves.stream()
-                .filter(m -> !(getSquareByMove(m).isOccupied() && getPieceByMove(m).getType() == Type.WALL))
+                .filter(m -> !(getSquareByMove(m).isOccupied() && getPieceByMove(m).isInvincible()))
                 .toList();
     }
 }

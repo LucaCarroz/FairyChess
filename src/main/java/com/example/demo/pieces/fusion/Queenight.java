@@ -24,7 +24,7 @@ public class Queenight extends Piece {
     @Override
     public List<Move> getAllPossibleMoves() {
         ArrayList<Move> allMoves = new ArrayList<>(Knight.getAllPossibleMovesFromPos(x, y));
-        allMoves.addAll(Queen.getAllPossibleMovesFromPos(x,y ));
+        allMoves.addAll(Queen.getAllPossibleMovesFromPos(x, y));
 
         return allMoves;
     }

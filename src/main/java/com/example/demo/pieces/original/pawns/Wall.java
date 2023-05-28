@@ -20,4 +20,7 @@ public class Wall extends Piece {
     public List<Move> getAllPossibleMoves() {
         return List.of();
     }
+
+    @Override
+    public boolean isInvincible(){return true;}
 }

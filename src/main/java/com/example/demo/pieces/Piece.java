@@ -1,6 +1,7 @@
 package com.example.demo.pieces;
 
 import com.example.demo.CreatePiece;
+import com.example.demo.pieces.original.pawns.Infantryman;
 import com.example.demo.pieces.original.pawns.Minion;
 import com.example.demo.pieces.original.pawns.Soldat;
 import javafx.scene.effect.Glow;
@@ -51,9 +52,9 @@ abstract public class Piece extends ImageView {
         /**
          * Original pawns
          */
-        MINION(-1), // larbin //TODO
-        SOLDAT(-1), // soldat //TODO
-        WALL(-1), // muraille //TODO
+        MINION(-1), // larbin //TODO change cost
+        SOLDAT(-1), // soldat //TODO change cost
+        WALL(-1), // muraille //TODO change cost
         INFANTRYMAN(-1), // fantassin //TODO
         CHAMPIFACE(-1), // champiface //TODO
         CURSEDGRAVE(-1), // tombe maudite, //TODO
@@ -196,6 +197,10 @@ abstract public class Piece extends ImageView {
         return getPieceByName("Square" + (move.x) + (move.y));
     }
 
+    public boolean isInvincible(){
+        return false;
+    }
+
     @Override
     public String toString() {
         return this.player.toString().toLowerCase() + this.type.toString().substring(0,1).toUpperCase() + this.type.toString().substring(1).toLowerCase();
@@ -230,9 +235,8 @@ abstract public class Piece extends ImageView {
             case WALL -> new Wall(p, x, y);
             case MINION -> new Minion(p, x, y);
             case SOLDAT -> new Soldat(p, x, y);
+            case INFANTRYMAN -> new Infantryman(p, x, y);
             /*
-                    SOLDAT(-1), // soldat
-                    INFANTRYMAN(-1), // fantassin
                     CHAMPIFACE(-1), // champiface
                     CURSED_GRAVE(-1), // tombe maudite,
 

@@ -1,9 +1,7 @@
 package com.example.demo.pieces;
 
 import com.example.demo.CreatePiece;
-import com.example.demo.pieces.original.pawns.Infantryman;
-import com.example.demo.pieces.original.pawns.Minion;
-import com.example.demo.pieces.original.pawns.Soldat;
+import com.example.demo.pieces.original.pawns.*;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,7 +12,6 @@ import com.example.demo.board.Move;
 import com.example.demo.board.Square;
 import com.example.demo.pieces.basic.*;
 import com.example.demo.pieces.fusion.*;
-import com.example.demo.pieces.original.pawns.Wall;
 import com.example.demo.pieces.original.pieces.*;
 import com.example.demo.player.Player;
 
@@ -55,8 +52,8 @@ abstract public class Piece extends ImageView {
         MINION(-1), // larbin //TODO change cost
         SOLDAT(-1), // soldat //TODO change cost
         WALL(-1), // muraille //TODO change cost
-        INFANTRYMAN(-1), // fantassin //TODO
-        CHAMPIFACE(-1), // champiface //TODO
+        INFANTRYMAN(-1), // fantassin //TODO change cost
+        CHAMPIFACE(-1), // champiface //TODO change cost
         CURSEDGRAVE(-1), // tombe maudite, //TODO
         /**
          * Original pieces
@@ -236,8 +233,8 @@ abstract public class Piece extends ImageView {
             case MINION -> new Minion(p, x, y);
             case SOLDAT -> new Soldat(p, x, y);
             case INFANTRYMAN -> new Infantryman(p, x, y);
+            case CHAMPIFACE -> new Champiface(p, x, y);
             /*
-                    CHAMPIFACE(-1), // champiface
                     CURSED_GRAVE(-1), // tombe maudite,
 
                     EXCALIBUR(-1), // excalibur

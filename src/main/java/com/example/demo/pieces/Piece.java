@@ -40,10 +40,10 @@ abstract public class Piece extends ImageView {
         NAZGUL(9), // [Fou + Cavalier]
         TROJANHORSE(10), // [Tour + Cavalier]
         QUEENIGHT(15), // cavareine/pégase [Cavalier + Reine]
-        CHAOS(30), // chaos [Reine + Reine]
-        BUCEPHALE(9), // bucéphale [Cavalier + Cavalier]
-        CARDINAL(9), // cardinal [Fou + Fou]
-        LIGHTHOUSE(15), // phare [Tour + Tour]
+        CHAOS(40), // chaos [Reine + Reine]
+        BUCEPHALE(12), // bucéphale [Cavalier + Cavalier]
+        CARDINAL(12), // cardinal [Fou + Fou]
+        LIGHTHOUSE(20), // phare [Tour + Tour]
 
 
         /**
@@ -54,7 +54,7 @@ abstract public class Piece extends ImageView {
         WALL(1), // muraille //TODO change cost
         INFANTRYMAN(3), // fantassin //TODO change cost
         CHAMPIFACE(0), // champiface //TODO change cost
-        CURSEDGRAVE(-1), // tombe maudite, //TODO
+        //CURSEDGRAVE(-1), // tombe maudite, //TODO
         /**
          * Original pieces
          */
@@ -65,9 +65,9 @@ abstract public class Piece extends ImageView {
         DRAGON(3), // dragon
         GRYFFON(7), // griffon
         TWHOMP(5), // twhomp
-        EXCALIBUR(-1), // excalibur //TODO
-        SAURON(10), // anciennement "arbre", //TODO
-        BOAT(9), // navire //TODO
+        //EXCALIBUR(-1), // excalibur //TODO
+        //SAURON(10), // anciennement "arbre", //TODO
+        //BOAT(9), // navire //TODO
         /**
          * Not implemented yet (tour + tour, etc)
          */

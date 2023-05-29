@@ -31,7 +31,7 @@ public class Main extends Application {
 
     public static final int BOARD_DIM = ChessBoard.SQUARE_DIM * 8;
     public static final int SCENE_DIM = BOARD_DIM;
-    public static final int N_COINS = 50;
+    public static final int N_COINS = 60;
 
     public static Stage primaryStage;
 
